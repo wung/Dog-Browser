@@ -1,5 +1,6 @@
-# eclipse bin-directory
+# eclipse bin-directory and .class files
 bin/
+*.class
 
 # Windows image file caches
 Thumbs.db
