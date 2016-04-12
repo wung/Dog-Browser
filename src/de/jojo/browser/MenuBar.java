@@ -182,6 +182,7 @@ public class MenuBar extends JPanel {
 		private JMenuItem newTab = new JMenuItem(Strings.get("menu.new_tab"), IconLoader.loadIcon("ic_new_tab.png"));
 		private JMenuItem closeTab = new JMenuItem(Strings.get("menu.close_tab"), IconLoader.loadIcon("ic_close_tab.png"));
 		private JMenuItem reload = new JMenuItem(Strings.get("menu.refresh"), IconLoader.loadIcon("ic_reload.png"));
+		private JMenuItem about = new JMenuItem(Strings.get("menu.about"), IconLoader.loadIcon("ic_info.png"));
 		
 		public Menu(){	
 			add(newTab);
@@ -196,7 +197,11 @@ public class MenuBar extends JPanel {
 			reload.addActionListener(this);
 			reload.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F5, 0));
 			
-			setPreferredSize(new Dimension(200, 25 * 3)); // 3 = Anzahl Componenten
+			add(about);
+			about.addActionListener(this);
+			about.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F3, 0));
+			
+			setPreferredSize(new Dimension(200, 25 * 4)); // 3 = count of components
 		}
 		
 		@Override
@@ -212,6 +217,14 @@ public class MenuBar extends JPanel {
 				browser.closeTab();
 			}else if(e.getSource().equals(reload)) {
 				browser.reload();
+			}else if(e.getSource().equals(about)) {
+				String infoText = Browser.WINDOW_TITLE + " v" + Browser.VERSION 
+						+ "<br>&copy; <a href=\"https://github.com/SlendermanDE/Dog-Browser\">Johannes M.</a> 2016"
+						+ "<br><br><b>" + Strings.get("about.libaries") + ":</b><ul>"
+						+ "<li><a href=\"http://www.oracle.com/technetwork/java/javase/overview/javafx-overview-2158620.html\">Oracle JavaFX</a></li>"
+						+ "<li><a href=\"http://p.yusukekamiyamane.com/\">Fugue Icons</a></li></ul>";
+				
+				Util.HTMLDialog.showDialog(getParent(), Strings.get("menu.about"), infoText, IconLoader.loadIcon("icon.png"));
 			}
 		}
 		
