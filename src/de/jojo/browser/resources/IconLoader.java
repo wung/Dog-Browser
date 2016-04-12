@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
 
 /**
  * L&auml;dt Icons aus dem aktuellen package
- * @author Johannes Meesters
+ * @author Johannes
  */
 
 public class IconLoader {

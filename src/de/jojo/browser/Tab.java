@@ -101,7 +101,7 @@ public class Tab extends JPanel implements ChangeListener<State>, EventHandler<W
 					webView.getEngine().load("http://" + url);
 				}
 			}else {
-				webView.getEngine().load("https://www.google.de/");
+				webView.getEngine().load("https://www.google.com/");
 			}
 		});
 	}
