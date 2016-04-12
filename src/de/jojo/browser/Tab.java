@@ -64,17 +64,17 @@ public class Tab extends JPanel implements ChangeListener<State>, EventHandler<W
 
 				@Override
 				public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-					statusText = observable.getValue();
-					browser.updateUI();
+					System.out.println("[MESSAGES] " + observable.getValue());
 				}
 			});*/
 			webView.getEngine().getLoadWorker().exceptionProperty().addListener(new ChangeListener<Throwable>() {
 
 				@Override
 				public void changed(ObservableValue<? extends Throwable> observable, Throwable oldValue, Throwable newValue) {
-					System.out.println(observable.toString());
+					System.err.println(observable.toString());
 					status = Browser.STATUS_ERROR;
 					statusText = observable.getValue().getMessage();
+					
 					browser.updateUI();
 				}
 

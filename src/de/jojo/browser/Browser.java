@@ -53,7 +53,6 @@ public class Browser extends JFrame implements WindowListener, ChangeListener {
 	
 	public Browser() {
 		Strings.loadStrings(Locale.getDefault().toString()); // load localization
-		System.out.println(Util.getHomepage());
 		
 		setTitle(WINDOW_TITLE);
 		setSize(1200, 800);
