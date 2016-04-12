@@ -16,21 +16,23 @@ import javax.swing.SwingUtilities;
 import de.jojo.browser.resources.IconLoader;
 import de.jojo.browser.resources.Strings;
 
-public class TabComponent extends JComponent implements MouseListener {
+public class TabHeader extends JComponent implements MouseListener {
 
 	private static final long serialVersionUID = -6919825579133704788L;
 	
+	private String titleString;
 	private JLabel title;
 	private JButton close;
 	
 	private Browser browser;
 	private int index = -1;
 	
-	public TabComponent(Browser browser, String titleString, int index) {
+	public TabHeader(Browser browser, String titleString, int index) {
 		this.browser = browser;
+		this.titleString = titleString;
 		this.index = index;
 		
-		title = new JLabel(titleString);
+		title = new JLabel(stripTitle(titleString));
 		title.setToolTipText(titleString);
 		
 		close = new JButton(IconLoader.loadIcon("ic_close_tab_small.png"));
@@ -51,29 +53,6 @@ public class TabComponent extends JComponent implements MouseListener {
 		
 		addMouseListener(this);
 		title.addMouseListener(this);
-		/*addMouseListener(new MouseListener() {
-			
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				if(e.getButton() == MouseEvent.BUTTON1) {
-					browser.selectTab(index);
-					System.out.println("select");
-				}else if(e.getButton() == MouseEvent.BUTTON2) {
-					browser.closeTab(index);
-				}
-			}
-			
-			@Override
-			public void mousePressed(MouseEvent e) {
-				
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {}
-			@Override
-			public void mouseEntered(MouseEvent e) {}
-			@Override
-			public void mouseClicked(MouseEvent e) {}
-		});*/
 		
 		setLayout(new FlowLayout(FlowLayout.LEFT));
 		add(title);
@@ -89,14 +68,24 @@ public class TabComponent extends JComponent implements MouseListener {
 	}
 
 	public String getTitle() {
-		return title.getText();
+		return titleString;
 	}
 
 	public void setTitle(String titleString) {
+		this.titleString = titleString;
+		
 		SwingUtilities.invokeLater(() -> {
-			title.setText(titleString);
+			title.setText(stripTitle(titleString));
 			title.setToolTipText(titleString);
 		});
+	}
+	
+	private String stripTitle(String title) {
+		if(title.length() > 30) {
+			return title.substring(0, 30) + "...";
+		}
+		
+		return title;
 	}
 
 	@Override

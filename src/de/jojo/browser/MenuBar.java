@@ -139,7 +139,7 @@ public class MenuBar extends JPanel {
 		overflowMenu = new Menu();
 		menu = new JButton(Strings.get("menu.title"));
 		menu.setContentAreaFilled(false);
-		menu.setBorderPainted(false);
+		menu.setBorderPainted(true);
 		menu.addMouseListener(new MouseListener() {
 			
 			@Override
@@ -164,7 +164,7 @@ public class MenuBar extends JPanel {
 		add(menu, BorderLayout.EAST);
 	}
 	
-	public void updateUI(Tab selected) {
+	public void updateUI(BrowserTab selected) {
 		SwingUtilities.invokeLater(() -> {
 			addressBar.setText(selected.getUrl());
 			historyBack.setEnabled(selected.canGoBack());

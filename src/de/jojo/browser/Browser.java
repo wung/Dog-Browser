@@ -47,7 +47,7 @@ public class Browser extends JFrame implements WindowListener, ChangeListener {
 	private MenuBar menuBar;
 	
 	private JTabbedPane tabbedPane;
-	private LinkedList<Tab> tabs;
+	private LinkedList<BrowserTab> browserTabs;
 	
 	private JLabel status;
 	
@@ -70,12 +70,12 @@ public class Browser extends JFrame implements WindowListener, ChangeListener {
 		
 		menuBar = new MenuBar(this);
 		
-		tabs = new LinkedList<Tab>();
-		tabs.add(new Tab(this, null, 0));
+		browserTabs = new LinkedList<BrowserTab>();
+		browserTabs.add(new BrowserTab(this, null, 0));
 		
 		tabbedPane = new JTabbedPane();
-		tabbedPane.add(tabs.getFirst().getTabComponent().getTitle(), tabs.getFirst());
-		tabbedPane.setTabComponentAt(0, tabs.getFirst().getTabComponent());
+		tabbedPane.add(browserTabs.getFirst().getTabComponent().getTitle(), browserTabs.getFirst());
+		tabbedPane.setTabComponentAt(0, browserTabs.getFirst().getTabComponent());
 		tabbedPane.addChangeListener(this);
 		tabbedPane.setBackground(Color.WHITE);
 		tabbedPane.setFont(new Font(tabbedPane.getFont().getName(), Font.BOLD, tabbedPane.getFont().getSize()));
@@ -100,23 +100,23 @@ public class Browser extends JFrame implements WindowListener, ChangeListener {
 	
 	public void load(String url) {
 		if(tabbedPane.getSelectedIndex() != -1) {
-			tabs.get(tabbedPane.getSelectedIndex()).load(url);
+			browserTabs.get(tabbedPane.getSelectedIndex()).load(url);
 		}
 	}
 	
 	public void reload() {
 		if(tabbedPane.getSelectedIndex() != -1) {
-			tabs.get(tabbedPane.getSelectedIndex()).reload();
+			browserTabs.get(tabbedPane.getSelectedIndex()).reload();
 		}
 	}
 	
 	public void updateUI() {
 		if(tabbedPane.getSelectedIndex() != -1) {
-			Tab selected = tabs.get(tabbedPane.getSelectedIndex());
+			BrowserTab selected = browserTabs.get(tabbedPane.getSelectedIndex());
 			
 			SwingUtilities.invokeLater(() -> {
 				for(int i = 0; i < tabbedPane.getTabCount(); i++) {
-					tabs.get(i).getTabComponent().setIndex(i);
+					browserTabs.get(i).getTabComponent().setIndex(i);
 				}
 				
 				menuBar.updateUI(selected);
@@ -140,8 +140,8 @@ public class Browser extends JFrame implements WindowListener, ChangeListener {
 	
 	public void newTab(String url) {
 		SwingUtilities.invokeLater(() -> {
-			Tab newTab = new Tab(this, url, tabbedPane.getTabCount());
-			tabs.add(newTab);
+			BrowserTab newTab = new BrowserTab(this, url, tabbedPane.getTabCount());
+			browserTabs.add(newTab);
 			tabbedPane.addTab(newTab.getTabComponent().getTitle(), newTab);
 			tabbedPane.setTabComponentAt(tabbedPane.getTabCount() - 1, newTab.getTabComponent());
 			tabbedPane.setSelectedIndex(tabbedPane.getTabCount() - 1);
@@ -155,10 +155,10 @@ public class Browser extends JFrame implements WindowListener, ChangeListener {
 			if(tabbedPane.getTabCount() > 1) {
 				SwingUtilities.invokeLater(() -> {
 					tabbedPane.removeTabAt(index);
-					tabs.remove(index);
+					browserTabs.remove(index);
 				});
 			}else {
-				tabs.get(index).load(null);
+				browserTabs.get(index).load(null);
 			}
 			
 			// updateUI(); // TODO updatet er sich durch den change listener nicht schon?
@@ -171,13 +171,13 @@ public class Browser extends JFrame implements WindowListener, ChangeListener {
 	
 	public void goInHistory(int offset) {
 		if(tabbedPane.getSelectedIndex() != -1) {
-			tabs.get(tabbedPane.getSelectedIndex()).goInHistory(offset);
+			browserTabs.get(tabbedPane.getSelectedIndex()).goInHistory(offset);
 		}
 	}
 	
 	public void hover() {
 		if(tabbedPane.getSelectedIndex() != -1) {
-			Tab selected = tabs.get(tabbedPane.getSelectedIndex());
+			BrowserTab selected = browserTabs.get(tabbedPane.getSelectedIndex());
 			if(selected.getStatus() == STATUS_READY) {
 				setStatus(selected.getHover().isEmpty() ? selected.getStatusText() : selected.getStatusText() + " - " + selected.getHover(), Browser.IC_READY);
 			}
@@ -202,7 +202,7 @@ public class Browser extends JFrame implements WindowListener, ChangeListener {
 	
 	@Override
 	public void windowClosing(WindowEvent e) {
-		for(Tab tab : tabs) tab.cancel();
+		for(BrowserTab browserTab : browserTabs) browserTab.cancel();
 	}
 
 	@Override

@@ -16,7 +16,7 @@ import javafx.scene.web.WebErrorEvent;
 import javafx.scene.web.WebEvent;
 import javafx.scene.web.WebView;
 
-public class Tab extends JPanel implements ChangeListener<State>, EventHandler<WebErrorEvent> {
+public class BrowserTab extends JPanel implements ChangeListener<State>, EventHandler<WebErrorEvent> {
 
 	private static final long serialVersionUID = 70457514861141162L;
 	private Browser browser;
@@ -24,13 +24,13 @@ public class Tab extends JPanel implements ChangeListener<State>, EventHandler<W
 	private JFXPanel jfxPanel;
 	private WebView webView;
 	
-	private TabComponent tabComponent;
+	private TabHeader tabHeader;
 	private String statusText = Strings.get("ui.loading");
 	private String hover = "";
 	private String url = "";
 	private int status = Browser.STATUS_LOADING;
 	
-	public Tab(Browser browser, String url, int index) {
+	public BrowserTab(Browser browser, String url, int index) {
 		this.browser = browser;
 		setLayout(new BorderLayout());
 		
@@ -72,10 +72,12 @@ public class Tab extends JPanel implements ChangeListener<State>, EventHandler<W
 				@Override
 				public void changed(ObservableValue<? extends Throwable> observable, Throwable oldValue, Throwable newValue) {
 					System.err.println(observable.toString());
-					status = Browser.STATUS_ERROR;
-					statusText = observable.getValue().getMessage();
-					
-					browser.updateUI();
+					if(observable.getValue() != null) {
+						status = Browser.STATUS_ERROR;
+						statusText = observable.getValue().getMessage();
+						
+						browser.updateUI();
+					}
 				}
 
 			});
@@ -85,7 +87,7 @@ public class Tab extends JPanel implements ChangeListener<State>, EventHandler<W
 		    jfxPanel.setScene(new Scene(webView));
 		});
 		
-		tabComponent = new TabComponent(browser, Strings.get("ui.loading"), index);
+		tabHeader = new TabHeader(browser, Strings.get("ui.loading"), index);
 		
 		add(jfxPanel, BorderLayout.CENTER);
 		load(url);
@@ -154,7 +156,7 @@ public class Tab extends JPanel implements ChangeListener<State>, EventHandler<W
 	public void changed(ObservableValue<? extends State> observable, State oldValue, State newValue) {
 		switch (newValue) {
 		case RUNNING:
-			tabComponent.setTitle("laden...");
+			tabHeader.setTitle("laden...");
 			status = Browser.STATUS_LOADING;
 			url = webView.getEngine().getLocation();
 			
@@ -162,7 +164,7 @@ public class Tab extends JPanel implements ChangeListener<State>, EventHandler<W
 			break;
 		case SUCCEEDED:
 			status = Browser.STATUS_READY;
-			tabComponent.setTitle(webView.getEngine().getTitle());
+			tabHeader.setTitle(webView.getEngine().getTitle());
 			
 			browser.updateUI();
 			break;
@@ -192,8 +194,8 @@ public class Tab extends JPanel implements ChangeListener<State>, EventHandler<W
 		this.hover = hover;
 	}
 
-	public TabComponent getTabComponent() {
-		return tabComponent;
+	public TabHeader getTabComponent() {
+		return tabHeader;
 	}
 
 	public String getUrl() {
