@@ -12,7 +12,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 
 /**
- * L&auml;dt Icons aus dem aktuellen package
+ * Loads icons from the current package
  * @author Johannes
  */
 

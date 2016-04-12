@@ -1,0 +1,9 @@
+translator=Johannes
+menu.title=Menu
+menu.new_tab=New tab
+menu.close_tab=Close tab
+menu.refresh=Refresh
+menu.homepage=Homepage
+menu.forward=One page forward
+menu.backward=One page back
+ui.loading=loading...

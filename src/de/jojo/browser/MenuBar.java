@@ -23,6 +23,7 @@ import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
 
 import de.jojo.browser.resources.IconLoader;
+import de.jojo.browser.resources.Strings;
 
 public class MenuBar extends JPanel {
 
@@ -46,7 +47,7 @@ public class MenuBar extends JPanel {
 		JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
 		home = new JButton(IconLoader.loadIcon("ic_home.png"));
-		home.setToolTipText("Startseite");
+		home.setToolTipText(Strings.get("menu.homepage"));
 		home.setBorderPainted(false);
 		home.setContentAreaFilled(false);
 		home.setFocusable(false);
@@ -55,12 +56,12 @@ public class MenuBar extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				browser.load("http://google.de");
+				browser.load(Util.getHomepage());
 			}
 		});
 		
 		historyBack = new JButton(IconLoader.loadIcon("ic_history_backwards.png"));
-		historyBack.setToolTipText("Eine Seite zurück");
+		historyBack.setToolTipText(Strings.get("menu.backward"));
 		historyBack.setEnabled(false);
 		historyBack.setBorderPainted(false);
 		historyBack.setContentAreaFilled(false);
@@ -75,7 +76,7 @@ public class MenuBar extends JPanel {
 		});
 		
 		historyForward = new JButton(IconLoader.loadIcon("ic_history_forwards.png"));
-		historyForward.setToolTipText("Eine Seite vor");
+		historyForward.setToolTipText(Strings.get("menu.forward"));
 		historyForward.setEnabled(false);
 		historyForward.setBorderPainted(false);
 		historyForward.setContentAreaFilled(false);
@@ -136,7 +137,7 @@ public class MenuBar extends JPanel {
 		});
 		
 		overflowMenu = new Menu();
-		menu = new JButton("Menü");
+		menu = new JButton(Strings.get("menu.title"));
 		menu.setContentAreaFilled(false);
 		menu.setBorderPainted(false);
 		menu.addMouseListener(new MouseListener() {
@@ -178,9 +179,9 @@ public class MenuBar extends JPanel {
 
 		private static final long serialVersionUID = 1837885908758406482L;
 		
-		private JMenuItem newTab = new JMenuItem("Neuer Tab", IconLoader.loadIcon("ic_new_tab.png"));
-		private JMenuItem closeTab = new JMenuItem("Tab schließen", IconLoader.loadIcon("ic_close_tab.png"));
-		private JMenuItem reload = new JMenuItem("Neu laden", IconLoader.loadIcon("ic_reload.png"));
+		private JMenuItem newTab = new JMenuItem(Strings.get("menu.new_tab"), IconLoader.loadIcon("ic_new_tab.png"));
+		private JMenuItem closeTab = new JMenuItem(Strings.get("menu.close_tab"), IconLoader.loadIcon("ic_close_tab.png"));
+		private JMenuItem reload = new JMenuItem(Strings.get("menu.refresh"), IconLoader.loadIcon("ic_reload.png"));
 		
 		public Menu(){	
 			add(newTab);

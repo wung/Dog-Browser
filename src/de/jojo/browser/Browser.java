@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.LinkedList;
+import java.util.Locale;
 
 import javax.swing.Icon;
 import javax.swing.JFrame;
@@ -20,6 +21,7 @@ import org.apache.commons.validator.routines.DomainValidator;
 import org.apache.commons.validator.routines.UrlValidator;
 
 import de.jojo.browser.resources.IconLoader;
+import de.jojo.browser.resources.Strings;
 
 public class Browser extends JFrame implements WindowListener, ChangeListener {
 	
@@ -50,6 +52,9 @@ public class Browser extends JFrame implements WindowListener, ChangeListener {
 	private JLabel status;
 	
 	public Browser() {
+		Strings.loadStrings(Locale.getDefault().toString()); // load localization
+		System.out.println(Util.getHomepage());
+		
 		setTitle(WINDOW_TITLE);
 		setSize(1200, 800);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,7 +81,7 @@ public class Browser extends JFrame implements WindowListener, ChangeListener {
 		tabbedPane.setBackground(Color.WHITE);
 		tabbedPane.setFont(new Font(tabbedPane.getFont().getName(), Font.BOLD, tabbedPane.getFont().getSize()));
 				
-		status = new JLabel("Willkommen bei " + WINDOW_TITLE + "!");
+		status = new JLabel();
 		
 		setLayout(new BorderLayout());
 		add(menuBar, BorderLayout.NORTH);

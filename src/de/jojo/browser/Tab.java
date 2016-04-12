@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 
 import javax.swing.JPanel;
 
+import de.jojo.browser.resources.Strings;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -24,7 +25,7 @@ public class Tab extends JPanel implements ChangeListener<State>, EventHandler<W
 	private WebView webView;
 	
 	private TabComponent tabComponent;
-	private String statusText = "laden...";
+	private String statusText = Strings.get("ui.loading");
 	private String hover = "";
 	private String url = "";
 	private int status = Browser.STATUS_LOADING;
@@ -84,7 +85,7 @@ public class Tab extends JPanel implements ChangeListener<State>, EventHandler<W
 		    jfxPanel.setScene(new Scene(webView));
 		});
 		
-		tabComponent = new TabComponent(browser, "laden...", index);
+		tabComponent = new TabComponent(browser, Strings.get("ui.loading"), index);
 		
 		add(jfxPanel, BorderLayout.CENTER);
 		load(url);
@@ -101,7 +102,7 @@ public class Tab extends JPanel implements ChangeListener<State>, EventHandler<W
 					webView.getEngine().load("http://" + url);
 				}
 			}else {
-				webView.getEngine().load("https://www.google.com/");
+				webView.getEngine().load(Util.getHomepage());
 			}
 		});
 	}

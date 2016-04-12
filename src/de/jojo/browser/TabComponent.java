@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
 import de.jojo.browser.resources.IconLoader;
+import de.jojo.browser.resources.Strings;
 
 public class TabComponent extends JComponent implements MouseListener {
 
@@ -39,7 +40,7 @@ public class TabComponent extends JComponent implements MouseListener {
 		close.setOpaque(true);
 		close.setMargin(new Insets(0, 0, 0, 0));
 		close.setBackground(new Color(240, 240, 240));
-		close.setToolTipText("Tab schließen");
+		close.setToolTipText(Strings.get("menu.close_tab"));
 		close.addActionListener(new ActionListener() {
 			
 			@Override
